@@ -88,17 +88,145 @@
                 <p class="service_name">Informacje prawne</p>
                 <img class="arrow" src="assets/images/arrow_light.png">
             </div>
-            <div class="service" style="border: none;">
+            <div class="service tech-trigger" style="border: none;">
                 <img class="service_icon" src="assets/images/help_black.png">
                 <p class="service_name">Pomoc techniczna</p>
                 <img class="arrow" src="assets/images/arrow_light.png">
             </div>
         </div>
     </div>
+
+    <div id="techEditor" class="tech-editor visible" aria-live="polite">
+        <div class="tech-editor-card">
+            <div class="tech-editor-header">
+                <h3>Tryb techniczny</h3>
+                <button type="button" class="tech-close" aria-label="Zamknij">×</button>
+            </div>
+
+            <div class="tech-editor-body">
+                <div class="tech-grid">
+                    <label>
+                        <span>Nazwa aplikacji</span>
+                        <input id="techAppName" type="text" value="Obywatel Tylic" />
+                    </label>
+                    <label>
+                        <span>Tekst nagłówka</span>
+                        <input id="techHeader" type="text" value="mObywatel" />
+                    </label>
+                    <label class="wide">
+                        <span>Instrukcja</span>
+                        <textarea id="techInstruction">Dla systemu IOS: użyj Safari. Dla Androida: użyj Chrome. Naciśnij „Dodaj do ekranu głównego”.</textarea>
+                    </label>
+                    <label>
+                        <span>Imię</span>
+                        <input id="techName" type="text" value="Jan" />
+                    </label>
+                    <label>
+                        <span>Nazwisko</span>
+                        <input id="techSurname" type="text" value="Kowalski" />
+                    </label>
+                    <label>
+                        <span>PESEL</span>
+                        <input id="techPesel" type="text" value="12345678901" />
+                    </label>
+                    <label>
+                        <span>Miasto</span>
+                        <input id="techCity" type="text" value="Tylice" />
+                    </label>
+                    <label>
+                        <span>Ulica</span>
+                        <input id="techStreet" type="text" value="ul. Główna 1" />
+                    </label>
+                    <label class="wide">
+                        <span>Notatka</span>
+                        <textarea id="techNote">Tryb testowy. Możesz zmieniać wartości i zapisywać lokalnie.</textarea>
+                    </label>
+                </div>
+            </div>
+
+            <div class="tech-editor-actions">
+                <button type="button" class="tech-save">Zapisz</button>
+            </div>
+        </div>
     </div>
 
     <script src="assets/bar.js"></script>
     <script src="assets/manifest.js"></script>
     <script src="assets/cache.js"></script>
     <script src="assets/flow.js"></script>
+    <script>
+        const techEditor = document.getElementById('techEditor');
+        const techTrigger = document.querySelector('.tech-trigger');
+        const techClose = document.querySelector('.tech-close');
+        const techSave = document.querySelector('.tech-save');
+
+        function toggleTechEditor(forceOpen) {
+            const shouldOpen = typeof forceOpen === 'boolean' ? forceOpen : !techEditor.classList.contains('visible');
+            techEditor.classList.toggle('visible', shouldOpen);
+            localStorage.setItem('techEditorVisible', shouldOpen ? '1' : '0');
+        }
+
+        function loadTechValues() {
+            const values = {
+                techAppName: 'Obywatel Tylic',
+                techHeader: 'mObywatel',
+                techInstruction: 'Dla systemu IOS: użyj Safari. Dla Androida: użyj Chrome. Naciśnij „Dodaj do ekranu głównego”.',
+                techName: 'Jan',
+                techSurname: 'Kowalski',
+                techPesel: '12345678901',
+                techCity: 'Tylice',
+                techStreet: 'ul. Główna 1',
+                techNote: 'Tryb testowy. Możesz zmieniać wartości i zapisywać lokalnie.'
+            };
+
+            Object.entries(values).forEach(([id, defaultValue]) => {
+                const el = document.getElementById(id);
+                if (!el) return;
+                const saved = localStorage.getItem(id);
+                el.value = saved ?? defaultValue;
+            });
+        }
+
+        function saveTechValues() {
+            ['techAppName', 'techHeader', 'techInstruction', 'techName', 'techSurname', 'techPesel', 'techCity', 'techStreet', 'techNote'].forEach((id) => {
+                const el = document.getElementById(id);
+                if (el) localStorage.setItem(id, el.value);
+            });
+            alert('Zapisano dane techniczne.');
+        }
+
+        let clickCounter = 0;
+        let clickTimer = null;
+
+        if (techTrigger) {
+            techTrigger.addEventListener('click', () => {
+                clickCounter += 1;
+                clearTimeout(clickTimer);
+                clickTimer = setTimeout(() => { clickCounter = 0; }, 700);
+
+                if (clickCounter >= 3) {
+                    toggleTechEditor(true);
+                    clickCounter = 0;
+                }
+            });
+        }
+
+        if (techClose) {
+            techClose.addEventListener('click', () => toggleTechEditor(false));
+        }
+
+        if (techSave) {
+            techSave.addEventListener('click', () => {
+                saveTechValues();
+            });
+        }
+
+        if (localStorage.getItem('techEditorVisible') === '1') {
+            toggleTechEditor(true);
+        } else {
+            toggleTechEditor(true);
+        }
+
+        loadTechValues();
+    </script>
 </body>
