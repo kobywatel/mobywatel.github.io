@@ -8,7 +8,7 @@ const upload = document.querySelector(".upload");
 const imageInput = document.createElement("input");
 
 imageInput.type = "file";
-imageInput.accept = "image/jpeg,image/png,image/gif";
+imageInput.accept = "image/jpeg,image/png,image/gif,image/webp";
 
 upload.addEventListener("click", () => {
   imageInput.click();
@@ -16,46 +16,44 @@ upload.addEventListener("click", () => {
 });
 
 imageInput.addEventListener("change", async (event) => {
-  const file = imageInput.files[0];
+  const file = event.target.files?.[0];
   if (!file) return;
+
+  if (!file.type.startsWith("image/")) {
+    upload.classList.add("error_shown");
+    alert("Wybierz poprawny plik graficzny.");
+    return;
+  }
 
   upload.classList.remove("upload_loaded", "error_shown");
   upload.classList.add("upload_loading");
 
   try {
-    const formData = new FormData();
-    formData.append("image", file);
+    const imageDataUrl = await readFileAsDataUrl(file);
 
-    const IMGBB_API_KEY = "d96c7cacb366e5c9587da66fc7e4c5df";
+    upload.setAttribute("selected", imageDataUrl);
+    upload.querySelector(".upload_uploaded").src = imageDataUrl;
 
-    const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
-      method: "POST",
-      body: formData
-    });
+    upload.classList.add("upload_loaded");
+    upload.classList.remove("upload_loading");
 
-    const result = await response.json();
-
-    if (result.status === 200 && result.data?.url) {
-      const imageUrl = result.data.url;
-
-      upload.setAttribute("selected", imageUrl);
-      upload.querySelector(".upload_uploaded").src = imageUrl;
-
-      upload.classList.add("upload_loaded");
-      upload.classList.remove("upload_loading");
-
-      console.log("Zdjęcie wgrane pomyślnie:", imageUrl);
-    } else {
-      throw new Error(result.error?.message || "Nieznany błąd ImgBB");
-    }
-
+    console.log("Zdjęcie wgrane lokalnie:", imageDataUrl.slice(0, 80));
   } catch (error) {
-    console.error("Błąd uploadu:", error);
+    console.error("Błąd odczytu zdjęcia:", error);
     upload.classList.remove("upload_loading");
     upload.classList.add("error_shown");
-    alert("Nie udało się wgrać zdjęcia.\nSprawdź połączenie i klucz ImgBB.");
+    alert("Nie udało się odczytać zdjęcia. Spróbuj ponownie.");
   }
 });
+
+function readFileAsDataUrl(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = () => reject(new Error("Błąd odczytu pliku"));
+    reader.readAsDataURL(file);
+  });
+}
 
 // wybór płci
 const selectorBox = document.querySelector(".selector_box");
