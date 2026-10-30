@@ -1,4 +1,3 @@
-
 .title{
     font-weight: 600;
     margin-top: 30px;
@@ -6,4 +5,117 @@
 
 .settings{
     margin-top: 120px;
+}
+
+.tech-editor {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(17, 24, 39, 0.3);
+    z-index: 999;
+    padding: 30px 16px;
+}
+
+.tech-editor.visible {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tech-editor-card {
+    width: min(1100px, 100%);
+    max-height: 90vh;
+    background: #f5f7fb;
+    border: 1px solid #d7dfe9;
+    border-radius: 18px;
+    box-shadow: 0 22px 60px rgba(15, 23, 42, 0.18);
+    overflow: hidden;
+}
+
+.tech-editor-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    border-bottom: 1px solid #d7dfe9;
+    background: #edf2f9;
+}
+
+.tech-editor-header h3 {
+    margin: 0;
+    font-size: 20px;
+    color: #1f3b6d;
+}
+
+.tech-close {
+    border: none;
+    background: #1f3b6d;
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.tech-editor-body {
+    padding: 18px;
+    max-height: calc(90vh - 120px);
+    overflow: auto;
+}
+
+.tech-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(220px, 1fr));
+    gap: 16px;
+}
+
+.tech-grid label {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 13px;
+    color: #1f3b6d;
+    font-weight: 600;
+}
+
+.tech-grid label.wide {
+    grid-column: 1 / -1;
+}
+
+.tech-grid input,
+.tech-grid textarea {
+    width: 100%;
+    border: 1px solid #c9d5e7;
+    border-radius: 10px;
+    background: white;
+    padding: 10px 12px;
+    font-size: 14px;
+    color: #1f3b6d;
+    resize: vertical;
+    min-height: 42px;
+    font-family: inherit;
+}
+
+.tech-grid textarea {
+    min-height: 90px;
+}
+
+.tech-editor-actions {
+    padding: 16px 18px 20px;
+    display: flex;
+    justify-content: flex-end;
+    border-top: 1px solid #d7dfe9;
+    background: #edf2f9;
+}
+
+.tech-save {
+    background: #0d93ec;
+    border: none;
+    color: white;
+    border-radius: 10px;
+    padding: 10px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
 }
