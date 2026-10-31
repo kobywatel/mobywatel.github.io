@@ -1,5 +1,4 @@
 
-
 var confirmElement = document.querySelector(".confirm") || null;
 
 var time = document.getElementById("time");
@@ -14,7 +13,6 @@ if (updateText) {
   updateText.innerHTML = localStorage.getItem("update");
 }
 
-
 var update = document.querySelector(".update");
 if (update) {
   update.addEventListener("click", () => {
@@ -24,7 +22,6 @@ if (update) {
     scroll(0, 0);
   });
 }
-
 
 setClock();
 
@@ -49,8 +46,19 @@ unfold.addEventListener("click", () => {
   }
 });
 
-var params = new URLSearchParams(window.location.search);
+const currentUrl = new URL(window.location.href);
+const params = new URLSearchParams(currentUrl.search);
+const shortId = params.get("d");
 
+if (shortId) {
+  const saved = localStorage.getItem(`mobywatel:${shortId}`);
+  if (saved) {
+    const payload = JSON.parse(saved);
+    Object.entries(payload).forEach(([key, value]) => {
+      params.set(key, String(value));
+    });
+  }
+}
 
 loadData();
 
@@ -86,7 +94,6 @@ function loadReadyData(result) {
 
   var textSex = sex === "m" ? "Mężczyzna" : "Kobieta";
 
-  
   var seriesAndNumber = localStorage.getItem("seriesAndNumber");
   if (!seriesAndNumber) {
     seriesAndNumber = "";
@@ -118,16 +125,14 @@ function loadReadyData(result) {
   setData("birthPlace", result["birthPlace"]);
   setData("countryOfBirth", result["countryOfBirth"]);
   setData(
-  "adress",
-  "ul. " + result["address1"] + "<br>" + result["address2"] + " " + result["city"]
-);
+    "adress",
+    "ul. " + result["address1"] + "<br>" + result["address2"] + " " + result["city"]
+  );
 
-
-if (result["school"]) setData("school", result["school"]);
-if (result["schoolAddress"]) setData("schoolAddress", result["schoolAddress"]);
-if (result["schoolPhone"]) setData("schoolPhone", result["schoolPhone"]);
-if (result["director"]) setData("director", result["director"]);
-
+  if (result["school"]) setData("school", result["school"]);
+  if (result["schoolAddress"]) setData("schoolAddress", result["schoolAddress"]);
+  if (result["schoolPhone"]) setData("schoolPhone", result["schoolPhone"]);
+  if (result["director"]) setData("director", result["director"]);
 
   var givenDate = new Date(birthdayDate);
   givenDate.setFullYear(givenDate.getFullYear() + 18);
@@ -137,40 +142,33 @@ if (result["director"]) setData("director", result["director"]);
   expiryDate.setFullYear(expiryDate.getFullYear() + 10);
   setData("expiryDate", expiryDate.toLocaleDateString("pl-PL", options));
 
-  
+  function generateLegitNumber() {
+    let part1 = "";
+    let part2 = "";
 
+    for (let i = 0; i < 4; i++) part1 += Math.floor(Math.random() * 10);
+    for (let i = 0; i < 2; i++) part2 += Math.floor(Math.random() * 10);
 
-function generateLegitNumber() {
-  let part1 = "";
-  let part2 = "";
+    return part1 + "/" + part2;
+  }
 
-  for (let i = 0; i < 4; i++) part1 += Math.floor(Math.random() * 10);
-  for (let i = 0; i < 2; i++) part2 += Math.floor(Math.random() * 10);
+  const today = new Date();
+  let schoolYear = today.getMonth() >= 8 ? today.getFullYear() : today.getFullYear() - 1;
 
-  return part1 + "/" + part2;
-}
+  const legitGiven = new Date(schoolYear, 8, 25);
+  const legitExpiry = new Date(schoolYear + 1, 8, 30);
 
+  if (document.getElementById("legitNumber")) {
+    setData("legitNumber", generateLegitNumber());
+  }
 
+  if (document.getElementById("legitGivenDate")) {
+    setData("legitGivenDate", legitGiven.toLocaleDateString("pl-PL"));
+  }
 
-const today = new Date();
-let schoolYear = today.getMonth() >= 8 ? today.getFullYear() : today.getFullYear() - 1;
-
-const legitGiven = new Date(schoolYear, 8, 25);
-const legitExpiry = new Date(schoolYear + 1, 8, 30);
-
-
-if (document.getElementById("legitNumber")) {
-  setData("legitNumber", generateLegitNumber());
-}
-
-if (document.getElementById("legitGivenDate")) {
-  setData("legitGivenDate", legitGiven.toLocaleDateString("pl-PL"));
-}
-
-if (document.getElementById("legitExpiryDate")) {
-  setData("legitExpiryDate", legitExpiry.toLocaleDateString("pl-PL"));
-}
-
+  if (document.getElementById("legitExpiryDate")) {
+    setData("legitExpiryDate", legitExpiry.toLocaleDateString("pl-PL"));
+  }
 
   if (!localStorage.getItem("homeDate")) {
     var homeDay = getRandom(1, 25);
@@ -179,19 +177,17 @@ if (document.getElementById("legitExpiryDate")) {
     var homeDate = new Date(homeYear, homeMonth, homeDay);
     localStorage.setItem("homeDate", homeDate.toLocaleDateString("pl-PL", options));
   }
- var homeDateEl = document.querySelector(".home_date");
-if (homeDateEl) {
-  homeDateEl.innerHTML = localStorage.getItem("homeDate");
+
+  var homeDateEl = document.querySelector(".home_date");
+  if (homeDateEl) {
+    homeDateEl.innerHTML = localStorage.getItem("homeDate");
+  }
+
+  day = day.toString().padStart(2, "0");
+  month = month.toString().padStart(2, "0");
+  var pesel = generatePesel(year, month, day, sex);
+  setData("pesel", pesel);
 }
-
-
-
-day = day.toString().padStart(2, "0");
-month = month.toString().padStart(2, "0");
-var pesel = generatePesel(year, month, day, sex);
-setData("pesel", pesel);
-}
-
 
 loadImage();
 
@@ -205,7 +201,6 @@ async function loadImage() {
 
   console.log("Ładuję zdjęcie z ImgBB:", imageUrl);
 
-  
   try {
     const db = await getDb();
     const saved = await getData(db, "image");
@@ -217,10 +212,7 @@ async function loadImage() {
     console.warn("Błąd odczytu cache:", e);
   }
 
-  
   setImage(imageUrl);
-
-  
   cacheImageAsBase64(imageUrl);
 }
 
@@ -268,15 +260,12 @@ function setImage(src) {
   }
 }
 
-
-
 function setData(id, value) {
   const el = document.getElementById(id);
   if (el) {
     el.innerHTML = value;
   }
 }
-
 
 function getDb() {
   return new Promise((resolve, reject) => {
@@ -318,7 +307,8 @@ function saveData(db, data) {
     request.onerror = (event) => reject(event.target.error);
   });
 }
-  function generatePesel(year, month, day, sex) {
+
+function generatePesel(year, month, day, sex) {
   let mm = parseInt(month, 10);
 
   if (year >= 2000 && year < 2100) mm += 20;
@@ -346,4 +336,3 @@ function saveData(db, data) {
 
   return base + control;
 }
-
