@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Przekierowanie…</title>
+    <script>
+      (() => {
+        const current = new URL(window.location.href);
+        const path = current.pathname.replace(/\/+$/, "");
+        const parts = path.split("/").filter(Boolean);
+        const slug = parts[parts.length - 1];
+
+        if (!slug || slug === "mobywatel.io") {
+          window.location.replace(new URL("./", current.href).href);
+          return;
+        }
+
+        const raw = localStorage.getItem(`mobywatel:${slug}`);
+        if (!raw) {
+          window.location.replace(new URL("./", current.href).href);
+          return;
+        }
+
+        const target = new URL("./card.html", current.href);
+        target.searchParams.set("d", slug);
+        window.location.replace(target.href);
+      })();
+    </script>
+  </head>
+  <body></body>
+</html>
