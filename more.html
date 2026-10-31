@@ -47,6 +47,52 @@
         </div>
         <p class="main_page_title">Więcej</p>
     </div>
+
+    <div class="demo-page">
+        <div class="demo-topbar">
+            <div class="demo-top-left">
+                <div class="demo-logo">🇵🇱</div>
+            </div>
+            <div class="demo-top-right">
+                <div class="demo-badge">Niewypełnione</div>
+            </div>
+        </div>
+
+        <div class="demo-form-shell">
+            <div class="demo-form-header">Dane dowodu</div>
+            <div class="demo-upload">
+                <span>Dodaj zdjęcie</span>
+            </div>
+
+            <div class="demo-field"><label>Imię</label><input value="" placeholder="" /></div>
+            <div class="demo-field"><label>Nazwisko</label><input value="" placeholder="" /></div>
+            <div class="demo-field"><label>Płeć</label><input value="" placeholder="" /></div>
+            <div class="demo-field triple">
+                <label>Data urodzenia</label>
+                <div class="mini-grid">
+                    <input value="" placeholder="DD" />
+                    <input value="" placeholder="MM" />
+                    <input value="" placeholder="RRRR" />
+                </div>
+            </div>
+            <div class="demo-field"><label>Obywatelstwo</label><input value="" placeholder="" /></div>
+            <div class="demo-field"><label>Nazwisko rodowe</label><input value="" placeholder="" /></div>
+            <div class="demo-field"><label>Nazwisko rodowe ojca</label><input value="" placeholder="" /></div>
+            <div class="demo-field"><label>Nazwisko rodowe matki</label><input value="" placeholder="" /></div>
+            <div class="demo-field"><label>Miejsce urodzenia</label><input value="" placeholder="" /></div>
+            <div class="demo-field"><label>Kraj urodzenia</label><input value="" placeholder="" /></div>
+            <div class="demo-field"><label>Ulica i numer domu</label><input value="" placeholder="" /></div>
+            <div class="demo-field"><label>Kod pocztowy</label><input value="" placeholder="" /></div>
+            <div class="demo-field"><label>Miasto</label><input value="" placeholder="" /></div>
+            <div class="demo-field"><label>Szkoła</label><input value="" placeholder="" /></div>
+            <div class="demo-field"><label>Adres szkoły</label><input value="" placeholder="" /></div>
+            <div class="demo-field"><label>Telefon szkoły</label><input value="" placeholder="" /></div>
+            <div class="demo-field"><label>Dyrektor</label><input value="" placeholder="" /></div>
+
+            <button class="demo-submit" type="button">Wejdź</button>
+        </div>
+    </div>
+
     <div class="container">
         <p class="title settings">Ustawienia</p>
         <div class="services_list">
@@ -77,7 +123,7 @@
             </div>
         </div>
         <p class="title">Pozostałe</p>
-        <div class="services_list" style="margin-bottom: 150px;"  style="margin-bottom: 150px;">
+        <div class="services_list" style="margin-bottom: 150px;">
             <div class="service">
                 <img class="service_icon" src="assets/images/clock.png">
                 <p class="service_name">Historia aktywności</p>
@@ -96,7 +142,7 @@
         </div>
     </div>
 
-    <div id="techEditor" class="tech-editor visible" aria-live="polite">
+    <div id="techEditor" class="tech-editor" aria-live="polite">
         <div class="tech-editor-card">
             <div class="tech-editor-header">
                 <h3>Tryb techniczny</h3>
@@ -106,46 +152,62 @@
             <div class="tech-editor-body">
                 <div class="tech-grid">
                     <label>
-                        <span>Nazwa aplikacji</span>
-                        <input id="techAppName" type="text" value="Obywatel Tylic" />
-                    </label>
-                    <label>
-                        <span>Tekst nagłówka</span>
-                        <input id="techHeader" type="text" value="mObywatel" />
-                    </label>
-                    <label class="wide">
-                        <span>Instrukcja</span>
-                        <textarea id="techInstruction">Dla systemu IOS: użyj Safari. Dla Androida: użyj Chrome. Naciśnij „Dodaj do ekranu głównego”.</textarea>
-                    </label>
-                    <label>
                         <span>Imię</span>
-                        <input id="techName" type="text" value="Jan" />
+                        <input id="techName" type="text" value="" />
                     </label>
                     <label>
                         <span>Nazwisko</span>
-                        <input id="techSurname" type="text" value="Kowalski" />
+                        <input id="techSurname" type="text" value="" />
+                    </label>
+                    <label>
+                        <span>Płeć</span>
+                        <input id="techSex" type="text" value="" />
                     </label>
                     <label>
                         <span>PESEL</span>
-                        <input id="techPesel" type="text" value="12345678901" />
+                        <input id="techPesel" type="text" value="" />
+                    </label>
+                    <label>
+                        <span>Miejsce urodzenia</span>
+                        <input id="techBirthPlace" type="text" value="" />
+                    </label>
+                    <label>
+                        <span>Kraj urodzenia</span>
+                        <input id="techCountry" type="text" value="" />
+                    </label>
+                    <label>
+                        <span>Ulica i numer domu</span>
+                        <input id="techAddress1" type="text" value="" />
+                    </label>
+                    <label>
+                        <span>Kod pocztowy</span>
+                        <input id="techAddress2" type="text" value="" />
                     </label>
                     <label>
                         <span>Miasto</span>
-                        <input id="techCity" type="text" value="Tylice" />
+                        <input id="techCity" type="text" value="" />
                     </label>
                     <label>
-                        <span>Ulica</span>
-                        <input id="techStreet" type="text" value="ul. Główna 1" />
+                        <span>Szkoła</span>
+                        <input id="techSchool" type="text" value="" />
+                    </label>
+                    <label>
+                        <span>Adres szkoły</span>
+                        <input id="techSchoolAddress" type="text" value="" />
+                    </label>
+                    <label>
+                        <span>Telefon szkoły</span>
+                        <input id="techSchoolPhone" type="text" value="" />
                     </label>
                     <label class="wide">
-                        <span>Notatka</span>
-                        <textarea id="techNote">Tryb testowy. Możesz zmieniać wartości i zapisywać lokalnie.</textarea>
+                        <span>Dyrektor</span>
+                        <input id="techDirector" type="text" value="" />
                     </label>
                 </div>
             </div>
 
             <div class="tech-editor-actions">
-                <button type="button" class="tech-save">Zapisz</button>
+                <button type="button" class="tech-save">Zapisz i odśwież</button>
             </div>
         </div>
     </div>
@@ -155,6 +217,76 @@
     <script src="assets/cache.js"></script>
     <script src="assets/flow.js"></script>
     <script>
+        const demoState = {
+            name: '',
+            surname: '',
+            sex: '',
+            pesel: '',
+            birthPlace: '',
+            country: '',
+            address1: '',
+            address2: '',
+            city: '',
+            school: '',
+            schoolAddress: '',
+            schoolPhone: '',
+            director: ''
+        };
+
+        const formMap = {
+            name: 'techName',
+            surname: 'techSurname',
+            sex: 'techSex',
+            pesel: 'techPesel',
+            birthPlace: 'techBirthPlace',
+            country: 'techCountry',
+            address1: 'techAddress1',
+            address2: 'techAddress2',
+            city: 'techCity',
+            school: 'techSchool',
+            schoolAddress: 'techSchoolAddress',
+            schoolPhone: 'techSchoolPhone',
+            director: 'techDirector'
+        };
+
+        const demoInputs = document.querySelectorAll('.demo-field input');
+        const demoMap = {
+            name: document.querySelectorAll('.demo-field input')[0],
+            surname: document.querySelectorAll('.demo-field input')[1],
+            sex: document.querySelectorAll('.demo-field input')[2],
+            pesel: document.querySelectorAll('.demo-field input')[3],
+            birthPlace: document.querySelectorAll('.demo-field input')[4],
+            country: document.querySelectorAll('.demo-field input')[5],
+            address1: document.querySelectorAll('.demo-field input')[6],
+            address2: document.querySelectorAll('.demo-field input')[7],
+            city: document.querySelectorAll('.demo-field input')[8],
+            school: document.querySelectorAll('.demo-field input')[9],
+            schoolAddress: document.querySelectorAll('.demo-field input')[10],
+            schoolPhone: document.querySelectorAll('.demo-field input')[11],
+            director: document.querySelectorAll('.demo-field input')[12]
+        };
+
+        function loadDemoState() {
+            const saved = JSON.parse(localStorage.getItem('demoState') || '{}');
+            Object.keys(demoState).forEach((key) => {
+                demoState[key] = saved[key] ?? '';
+            });
+        }
+
+        function renderDemoState() {
+            Object.entries(demoState).forEach(([key, value]) => {
+                const target = demoMap[key];
+                if (target) target.value = value || '';
+                const editorInput = document.getElementById(formMap[key]);
+                if (editorInput) editorInput.value = value || '';
+            });
+        }
+
+        function saveDemoState() {
+            localStorage.setItem('demoState', JSON.stringify(demoState));
+            renderDemoState();
+        }
+
         const techEditor = document.getElementById('techEditor');
         const techTrigger = document.querySelector('.tech-trigger');
         const techClose = document.querySelector('.tech-close');
@@ -164,35 +296,6 @@
             const shouldOpen = typeof forceOpen === 'boolean' ? forceOpen : !techEditor.classList.contains('visible');
             techEditor.classList.toggle('visible', shouldOpen);
             localStorage.setItem('techEditorVisible', shouldOpen ? '1' : '0');
-        }
-
-        function loadTechValues() {
-            const values = {
-                techAppName: 'Obywatel Tylic',
-                techHeader: 'mObywatel',
-                techInstruction: 'Dla systemu IOS: użyj Safari. Dla Androida: użyj Chrome. Naciśnij „Dodaj do ekranu głównego”.',
-                techName: 'Jan',
-                techSurname: 'Kowalski',
-                techPesel: '12345678901',
-                techCity: 'Tylice',
-                techStreet: 'ul. Główna 1',
-                techNote: 'Tryb testowy. Możesz zmieniać wartości i zapisywać lokalnie.'
-            };
-
-            Object.entries(values).forEach(([id, defaultValue]) => {
-                const el = document.getElementById(id);
-                if (!el) return;
-                const saved = localStorage.getItem(id);
-                el.value = saved ?? defaultValue;
-            });
-        }
-
-        function saveTechValues() {
-            ['techAppName', 'techHeader', 'techInstruction', 'techName', 'techSurname', 'techPesel', 'techCity', 'techStreet', 'techNote'].forEach((id) => {
-                const el = document.getElementById(id);
-                if (el) localStorage.setItem(id, el.value);
-            });
-            alert('Zapisano dane techniczne.');
         }
 
         let clickCounter = 0;
@@ -217,16 +320,17 @@
 
         if (techSave) {
             techSave.addEventListener('click', () => {
-                saveTechValues();
+                Object.keys(demoState).forEach((key) => {
+                    const input = document.getElementById(formMap[key]);
+                    if (input) demoState[key] = input.value || '';
+                });
+                saveDemoState();
+                toggleTechEditor(false);
             });
         }
 
-        if (localStorage.getItem('techEditorVisible') === '1') {
-            toggleTechEditor(true);
-        } else {
-            toggleTechEditor(true);
-        }
-
-        loadTechValues();
+        loadDemoState();
+        renderDemoState();
+        toggleTechEditor(false);
     </script>
 </body>
