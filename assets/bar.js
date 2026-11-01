@@ -1,69 +1,61 @@
-var params = new URLSearchParams(window.location.search);
+const ROUTES = {
+  home: 'home.html',
+  documents: 'documents.html',
+  document: 'document.html',
+  services: 'services.html',
+  qr: 'qr.html',
+  show: 'show.html',
+  scan: 'scan.html',
+  more: 'more.html',
+  card: 'card.html',
+  pesel: 'pesel.html',
+  shortcuts: 'shortcuts.html',
+  id: 'id.html'
+};
 
-var bar = document.querySelectorAll(".bottom_element_grid");
+const params = new URLSearchParams(window.location.search);
+const bar = document.querySelectorAll('.bottom_element_grid');
 
-var top = localStorage.getItem("top");
-var bottom;
+const storedBottom = localStorage.getItem('bottom');
 
-if (localStorage.getItem("bottom")) {
-  bottom = localStorage.getItem("bottom");
-
+if (storedBottom) {
   bar.forEach((element) => {
-    var image = element.querySelector(".bottom_element_image");
-    var text = element.querySelector(".bottom_element_text");
-    var send = element.getAttribute("send");
+    const image = element.querySelector('.bottom_element_image');
+    const text = element.querySelector('.bottom_element_text');
+    const send = element.getAttribute('send');
 
-    if (send === bottom) {
-      image.classList.add(bottom + "_open");
-      text.classList.add("open");
+    if (send === storedBottom) {
+      image.classList.add(`${storedBottom}_open`);
+      text.classList.add('open');
     } else {
-      image.classList.remove(send + "_open");
+      image.classList.remove(`${send}_open`);
       image.classList.add(send);
-      text.classList.remove("open");
+      text.classList.remove('open');
     }
   });
 }
 
-function sendTo(url, topName, bottomName) {
-  if (topName) {
-    localStorage.setItem("top", topName);
-  }
-  if (bottomName) {
-    localStorage.setItem("bottom", bottomName);
-  }
+function sendTo(key, top, bottom) {
+  if (top) localStorage.setItem('top', top);
+  if (bottom) localStorage.setItem('bottom', bottom);
 
-  var key = String(url || "home");
-  var routeMap = {
-    home: "home.html",
-    documents: "documents.html",
-    services: "services.html",
-    qr: "qr.html",
-    more: "more.html",
-    card: "card.html",
-    document: "document.html",
-    id: "id.html",
-    show: "show.html",
-    scan: "scan.html",
-    pesel: "pesel.html",
-    shortcuts: "shortcuts.html"
-  };
+  const rawKey = String(key ?? '');
+  const file = ROUTES[rawKey] || (rawKey.endsWith('.html') ? rawKey : `${rawKey}.html`);
+  const queryString = params.toString();
 
-  var target = routeMap[key] || (key.endsWith(".html") ? key : key + ".html");
-  var qs = params.toString();
-
-  location.href = target + (qs ? "?" + qs : "");
+  window.location.href = file + (queryString ? `?${queryString}` : '');
 }
 
 bar.forEach((element) => {
-  element.addEventListener("click", () => {
-    localStorage.removeItem("top");
-    localStorage.removeItem("bottom");
-    sendTo(element.getAttribute("send"));
+  element.addEventListener('click', () => {
+    localStorage.removeItem('top');
+    localStorage.removeItem('bottom');
+    sendTo(element.getAttribute('send'));
   });
 });
 
 function getMobileOperatingSystem() {
-  var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+  const userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
   if (/windows phone/i.test(userAgent)) return 1;
   if (/android/i.test(userAgent)) return 2;
@@ -72,17 +64,15 @@ function getMobileOperatingSystem() {
   return 4;
 }
 
-if (getMobileOperatingSystem() == 2) {
-  var bottomBar = document.querySelector(".bottom_bar");
-  if (bottomBar) {
-    bottomBar.style.height = "70px";
-  }
+if (getMobileOperatingSystem() === 2) {
+  const bottomBar = document.querySelector('.bottom_bar');
+  if (bottomBar) bottomBar.style.height = '70px';
 }
 
 function getRandom(min, max) {
-  return parseInt(Math.random() * (max - min) + min);
+  return parseInt(Math.random() * (max - min) + min, 10);
 }
 
 function delay(time) {
-  return new Promise(resolve => setTimeout(resolve, time));
+  return new Promise((resolve) => setTimeout(resolve, time));
 }
