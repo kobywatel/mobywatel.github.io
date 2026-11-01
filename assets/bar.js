@@ -1,81 +1,81 @@
-
 var params = new URLSearchParams(window.location.search);
 
-var bar = document.querySelectorAll('.bottom_element_grid');
+var bar = document.querySelectorAll(".bottom_element_grid");
 
-var top = localStorage.getItem('top');
+var top = localStorage.getItem("top");
 var bottom;
 
-if (localStorage.getItem('bottom')) {
-  bottom = localStorage.getItem('bottom');
+if (localStorage.getItem("bottom")) {
+  bottom = localStorage.getItem("bottom");
 
   bar.forEach((element) => {
-    var image = element.querySelector('.bottom_element_image');
-    var text = element.querySelector('.bottom_element_text');
+    var image = element.querySelector(".bottom_element_image");
+    var text = element.querySelector(".bottom_element_text");
+    var send = element.getAttribute("send");
 
-    var send = element.getAttribute('send');
     if (send === bottom) {
-      image.classList.add(bottom + '_open');
-      text.classList.add('open');
+      image.classList.add(bottom + "_open");
+      text.classList.add("open");
     } else {
-      image.classList.remove(send + '_open');
+      image.classList.remove(send + "_open");
       image.classList.add(send);
-      text.classList.remove('open');
+      text.classList.remove("open");
     }
   });
 }
 
 function sendTo(url, topName, bottomName) {
   if (topName) {
-    localStorage.setItem('top', topName);
+    localStorage.setItem("top", topName);
   }
   if (bottomName) {
-    localStorage.setItem('bottom', bottomName);
+    localStorage.setItem("bottom", bottomName);
   }
 
-  var route = String(url || 'home');
-  if (!/\.html$/i.test(route)) {
-    route += '.html';
-  }
+  var key = String(url || "home");
+  var routeMap = {
+    home: "home.html",
+    documents: "documents.html",
+    services: "services.html",
+    qr: "qr.html",
+    more: "more.html",
+    card: "card.html",
+    document: "document.html",
+    id: "id.html",
+    show: "show.html",
+    scan: "scan.html",
+    pesel: "pesel.html",
+    shortcuts: "shortcuts.html"
+  };
 
+  var target = routeMap[key] || (key.endsWith(".html") ? key : key + ".html");
   var qs = params.toString();
-  var target = route + (qs ? `?${qs}` : '');
-  location.href = target;
+
+  location.href = target + (qs ? "?" + qs : "");
 }
 
-var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-var optionsTime = { second: '2-digit', minute: '2-digit', hour: '2-digit' };
-
 bar.forEach((element) => {
-  element.addEventListener('click', () => {
-    localStorage.removeItem('top');
-    localStorage.removeItem('bottom');
-    sendTo(element.getAttribute('send'));
+  element.addEventListener("click", () => {
+    localStorage.removeItem("top");
+    localStorage.removeItem("bottom");
+    sendTo(element.getAttribute("send"));
   });
 });
 
 function getMobileOperatingSystem() {
   var userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
-  if (/windows phone/i.test(userAgent)) {
-    return 1;
-  }
-
-  if (/android/i.test(userAgent)) {
-    return 2;
-  }
-
-  if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-    return 3;
-  }
+  if (/windows phone/i.test(userAgent)) return 1;
+  if (/android/i.test(userAgent)) return 2;
+  if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) return 3;
 
   return 4;
 }
 
 if (getMobileOperatingSystem() == 2) {
-  var bottomBar = document.querySelector('.bottom_bar');
+  var bottomBar = document.querySelector(".bottom_bar");
   if (bottomBar) {
-    bottomBar.style.height = '70px';
+    bottomBar.style.height = "70px";
   }
 }
 
